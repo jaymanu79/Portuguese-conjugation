@@ -7,4 +7,17 @@ Instantiate a tense class (ie "Presente_Indicativo"), set its verb and call conj
 The code implements some known irregular forms i studied or read in books, but will apply default forms to any verb it doesn't know.
 It is not meant as a strong reference, but as a learning tool.
 I tested it against my textbooks, but feel free to enrich it if you are seeing some errors.
+# Unimplemented - TO DO
+- Perfeito composto
+- Mais que perfeito
+- Futuro simples
+- Futuro composto
+- Condicional composto
+- Subjuntivo imperfeito
+- Subjuntivo perfeito
+- Subjuntivo mais que perfeito
+- Subjuntivo futuro 
+- Infinitivo conjugado: impersonal, personal simple, personal composto
+- Gerundio: simple, composto
+- Participio
 

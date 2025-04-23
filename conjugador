@@ -442,28 +442,13 @@ class Imperativo(Tempo):
 			"ser": {"tuAf":"sê"}
 		} )
 
-# Tempos TO DO
-#  Perfeito composto
-#  Mais que perfeito
-#  Futuro simples
-#  Futuro composto
-#  Condicional composto
-#  Subjuntivo imperfeito
-#  Subjuntivo perfeito
-#  Subjuntivo mais que perfeito
-#  Subjuntivo futuro 
-#  Infinitivo conjugado: impersonal, personal simple, personal composto
-#  Gerundio: simple, composto
-#  Participio
-
 ## Main
 
 def main():
 	tempos=[Presente_Indicativo(),Imperfeito(),Preterito_Perfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
 	#tempos=[Presente_Subjuntivo()]
-	verbos=["pagar","sorrir","preferir"]
 	# verbos do caderno 
-	#verbos=["falar","comer","partir","dar","dizer","estar","fazer","haver","ir","poder","por","querer","saber","ser","sair","ter","trazer","ver","vir","dormir","ouvir","pedir","despedir","medir","preferir","conseguir","divertir","seguir","sentir","servir","vestir","ler","reler","rir","sorrir","perder","subir","consumir","fugir","construir","destruir","traduzir","reduzir","reluzir"]
+	verbos=["falar","comer","partir","dar","dizer","estar","fazer","haver","ir","poder","por","querer","saber","ser","sair","ter","trazer","ver","vir","dormir","ouvir","pedir","despedir","medir","preferir","conseguir","divertir","seguir","sentir","servir","vestir","ler","reler","rir","sorrir","perder","subir","consumir","fugir","construir","destruir","traduzir","reduzir","reluzir"]
 	# verbos do larousse
 	#verbos=["ter","ser","andar","viver","partir","prevenir","agredir","progredir","transgredir","dormir","cobrir","engolir","tossir","seguir","conseguir","prosseguir","servir","sentir","mentir","vestir","repetir","sugerir","subir","fugir","acudir","sacudir","passear","odiar","incendiar","ansiar","remediar","sair","cair","distrair","contrair","diluir","concluir","influir","distribuir","retribuir","dar","estar","caber","dizer","fazer","haver","ganhar","haver","ler","perder","poder","por","querer","saber","trazer","ver","abrir","cobrir","ir","ouvir","pedir","rir","vir","gastar","pagar","escrever"]
 	for verbo in verbos:	
