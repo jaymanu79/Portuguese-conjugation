@@ -1,0 +1,392 @@
+#!/usr/bin/python3
+from abc import abstractmethod
+
+## Tempos
+
+class Tempo():
+	@property
+	@abstractmethod
+	def nome(self):
+		pass
+
+	def __init__(self):
+		self.irreg=False
+
+	@property
+	def verbo(self):
+		return self._verbo
+	@verbo.setter
+	def verbo(self,value):
+		self._verbo=value
+
+	def grupo(self):
+		if (self._verbo.endswith("ar") or self._verbo.endswith("or")):
+			return "1"
+		elif (self._verbo.endswith("er")):
+			return "2"
+		elif (self._verbo.endswith("ir")):
+			return "3"
+		else:
+			raise Exception("impossivel ter grupo para verbo "+self._verbo)
+
+	@property
+	def pessoas(self):
+		return {"eu":"eu","tu":"tu","ele":"ele","nos":"nós","eles":"eles"}
+
+	@property
+	def prefixo(self):
+		return ""	
+
+	@property
+	def suffixo(self):
+		return ""
+
+	def info(self):
+		return (self.verbo + " (G" + self.grupo() + ") - " + self.nome)
+
+	@property
+	@abstractmethod
+	def term_regular(self):
+		pass	
+
+	@property
+	@abstractmethod
+	def radical_irreg(self):
+		return {}	
+
+	def radical(self,pessoa):
+		if (self._verbo in self.radical_irreg and pessoa in self.radical_irreg[self._verbo]):
+			self.irreg=True	
+			return self.radical_irreg[self._verbo][pessoa]
+		elif (self._verbo in self.radical_irreg and "all" in self.radical_irreg[self._verbo]):
+			self.irreg=True
+			return self.radical_irreg[self._verbo]["all"]
+		else:
+			if (self._verbo[-2:] in ["ar","er","ir","or"]):
+				return self._verbo[:-2]
+			else:
+				raise Exception("impossivel ter radical para verbo " +self._verbo)
+
+	@property
+	@abstractmethod
+	def verbo_irreg(self):
+		return {}
+
+	def terminacao(self,pessoa):
+		return self.term_regular[self.grupo()][pessoa]
+
+	def conjug(self,pessoa):
+		self.irreg=False
+		if (self._verbo in self.verbo_irreg and pessoa in self.verbo_irreg[self._verbo]):
+			self.irreg=True
+			return self.verbo_irreg[self._verbo][pessoa]
+		else:
+			return (self.radical(pessoa) + self.terminacao(pessoa))
+
+	def conjugTudo(self,option=""):
+		if (option == ""):
+			for pessoa in self.pessoas.keys():
+				print (self.prefixo+self.pessoas[pessoa] + " " + self.conjug(pessoa)+("*" if self.irreg else "")+self.suffixo)
+		elif (option == "ter"):
+			for pessoa in self.pessoas.keys():
+				print (self.prefixo+self.pessoas[pessoa] + " " + self.conjugInfinitivo(pessoa,"ter","de")+self.suffixo)
+		elif (option == "ir"):
+			for pessoa in self.pessoas.keys():
+				print (self.pessoas[pessoa] + " " + self.conjugInfinitivo(pessoa,"ir","")+self.suffixo)
+
+
+
+	def conjugInfinitivo(self,pessoa,verbo2,sep):
+		self.irreg=False
+		infinitivo=self.verbo
+		self.verbo=verbo2
+		result=self.conjug(pessoa) + ("*" if self.irreg else "") + " " + (sep + " " if sep!="" else "") + infinitivo
+		self.verbo=infinitivo
+		return result
+
+
+class Presente_Indicativo(Tempo):
+	@property
+	def nome(self):
+		return "Presente do indicativo"
+
+	@property
+	def term_regular(self):
+		return( {"1": {"eu":"o","tu":"as","ele":"a","nos":"amos","eles":"am"},
+			 "2": {"eu":"o","tu":"es","ele":"e","nos":"emos","eles":"em"},
+			 "3": {"eu":"o","tu":"es","ele":"e","nos":"imos","eles":"em"} } )
+
+	@property
+	def radical_irreg(self):
+		return( { 
+				"poder": {"eu":"poss"},
+				"dormir": {"eu":"durm"},
+				"ouvir": {"eu":"ouç"},
+				"pedir": {"eu":"peç"},
+				"despedir": {"eu":"despeç"},
+				"medir": {"eu":"meç"},
+				"preferir": {"eu":"prefir"},
+				"seguir": {"eu":"sig"},
+				"conseguir": {"eu":"consig"},
+				"divertir": {"eu":"divirt"},
+				"sentir": {"eu":"sint"},
+				"servir": {"eu":"sirv"},
+				"vestir": {"eu":"vist"},
+				"perder": {"eu":"perc"},
+				"subir":  {"tu":"sob","ele":"sob","eles":"sob"},
+				"consumir":  {"tu":"consom","ele":"consom","eles":"consom"},
+				"fugir":  {"eu":"fuj","tu":"fog","ele":"fog","eles":"fog"},
+				"prevenir": {"eu":"previn","tu":"previn","ele":"previn","eles":"previn"},
+				"agredir": {"eu":"agrid","tu":"agrid","ele":"agrid","eles":"agrid"},
+				"progredir": {"eu":"progrid","tu":"progrid","ele":"progrid","eles":"progrid"},
+				"transgredir": {"eu":"transgrid","tu":"transgrid","ele":"transgrid","eles":"transgrid"},
+				"passear": {"all":"passei"},
+				"odiar": {"all":"odei"},
+				"incendiar": {"all":"incendei"},
+				"ansiar": {"all":"ansei"},
+				"remediar": {"all":"remedei"},
+				"caber": {"eu":"caib"},
+			} )
+
+	@property
+	def verbo_irreg(self):
+		return( {
+				"saber": {"eu":"sei"},	
+				"querer": {"ele":"quer"},
+				"ver": {"eu":"vejo","tu":"vês","ele":"vê","eles":"veem"},
+				"ler": {"eu":"leio","tu":"lês","ele":"lê","eles":"leem"},
+				"reler": {"eu":"releio","tu":"relês","ele":"relê","eles":"releem"},
+				"vir": {"eu":"venho","tu":"vens","ele":"vem","nos":"vimos","eles":"vêm"},
+				"ir" : {"eu":"vou","tu":"vais","ele":"vai","nos":"vamos","eles":"vão"} ,
+				"ter": {"eu":"tenho","tu":"tens","ele":"tem","eles":"têm"},
+				"dar": {"eu":"dou","eles":"dão","tu":"dás","ele":"dá"},
+				"dizer": {"eu":"digo","ele":"diz"},
+				"estar": {"eu":"estou","eles":"estão"},
+				"fazer": {"eu":"faço","ele":"faz"},
+				"haver": {"eu":"hei","tu":"hás","ele":"há","eles":"hão"},
+				"por": {"eu":"ponho","tu":"pões","ele":"põe","nos":"pomos","eles":"põem"},
+				"ser": {"eu":"sou","tu":"és","ele":"é","nos":"somos","eles":"são"},
+				"sair": {"eu":"saio","tu":"sais","ele":"sai"},
+				"cair": {"eu":"caio","tu":"cais","ele":"cai"},
+				"distrair": {"eu":"distraio","tu":"distrais","ele":"distrai"},
+				"contrair": {"eu":"contraio","tu":"contrais","ele":"contrai"},
+				"trazer": {"eu":"trago","ele":"traz"},
+				"rir": {"eu":"rio","tu":"ris","ele":"ri","eles":"riem"},
+				"sorrir": {"eu":"sorrio","tu":"sorris","ele":"sorri","eles":"sorriem"},
+				"construir": {"tu":"constroís","ele":"constroí","eles":"constroem"},
+				"destruir": {"tu":"destroís","ele":"destroí","eles":"destroem"},
+				"traduzir": {"ele":"traduz"},
+				"reduzir": {"ele":"reduz"},
+				"reluzir": {"ele":"reluz"},
+				"passear": {"nos":"passeamos"},
+				"odiar": {"nos":"odiamos"},
+				"incendiar": {"nos":"incendiamos"},
+				"ansiar": {"nos":"ansiamos"},
+				"remediar": {"nos":"remediamos"},
+				"diluir": {"tu":"diluis","ele":"dilui"},
+				"concluir": {"tu":"concluis","ele":"conclui"},
+				"influir": {"tu":"influis","ele":"influi"},
+				"distribuir": {"tu":"distribuis","ele":"distribui"},
+				"retribuir": {"tu":"retribuis","ele":"retribui"},
+
+			} )
+
+class Preterito_Perfeito(Tempo):
+        @property
+        def nome(self):
+                return "Pretérito perfeito simple"
+
+        @property
+        def term_regular(self):
+                return( {"1": {"eu":"ei","tu":"aste","ele":"ou","nos":"amos","eles":"aram"},
+                         "2": {"eu":"i" ,"tu":"este","ele":"eu","nos":"emos","eles":"eram"},
+                         "3": {"eu":"i", "tu":"iste","ele":"iu","nos":"imos","eles":"iram"} } )
+
+class Imperfeito(Tempo):
+	@property
+	def nome(self):
+		return "Pretérito Imperfeito"
+
+	@property
+	def term_regular(self):
+ 		return( {"1": {"eu":"ava","tu":"avas","ele":"ava","nos":"ávamos","eles":"avam"},
+                         "2": {"eu":"ia" ,"tu":"ias", "ele":"ia" ,"nos":"íamos", "eles":"iam"},
+                         "3": {"eu":"ia" ,"tu":"ias", "ele":"ia" ,"nos":"íamos", "eles":"iam"} } )
+
+	@property
+	def radical_irreg(self):
+		return( {
+		} )
+
+	@property
+	def verbo_irreg(self):
+		return( {
+			"ter": {"eu":"tinha","tu":"tinhas","ele":"tinha","nos":"tinhamos","eles":"tinham"},
+			"ser": {"eu":"era","tu":"eras","ele":"era","nos":"éramos","eles":"eram"}
+		})
+
+class Condicional(Tempo):
+	@property
+	def nome(self):
+		return "Condicional"
+
+	@property
+	def term_regular(self):
+                return( {"1": {"eu":"ia" ,"tu":"ias", "ele":"ia" ,"nos":"íamos", "eles":"iam"},
+			"2": {"eu":"ia" ,"tu":"ias", "ele":"ia" ,"nos":"íamos", "eles":"iam"},
+			"3": {"eu":"ia" ,"tu":"ias", "ele":"ia" ,"nos":"íamos", "eles":"iam"} } )
+
+	def radical(self,pessoa):
+		return self._verbo
+
+class Presente_Subjuntivo(Tempo):
+	@property
+	def nome(self):
+		return "Presente do subjuntivo"
+
+	@property
+	def prefixo(self):
+		return "que "
+
+	@property
+	def term_regular(self):
+		return (
+			{ "1": {"eu":"e","tu":"es","ele":"e","nos":"emos","eles":"em"},
+			  "2": {"eu":"a","tu":"as","ele":"a","nos":"amos","eles":"am"},
+			  "3": {"eu":"a","tu":"as","ele":"a","nos":"amos","eles":"am"}	} )
+	@property
+	def radical_irreg(self):
+		return( 
+			{ "dizer": {"all":"dig" },
+			  "estar": {"all":"estej" },
+			  "fazer": {"all":"faç" },
+			  "haver": {"all":"haj" },
+			  "poder": {"all":"poss" },
+			  "por": {"all":"ponh" },
+			  "querer": {"all":"queir" },
+			  "saber": {"all":"saib" },
+			  "ser": {"all":"sej" },
+			  "sair": {"all":"sai" },
+			  "cair": {"all":"cai" },
+			  "distrair": {"all":"distrai" },
+			  "contrair": {"all":"contrai" },
+			  "ter": {"all":"tenh" },
+			  "trazer": {"all":"trag" },
+			  "ver": {"all":"vej" },
+			  "vir": {"all":"venh" },
+			  "prevenir": {"all":"previn" },
+			  "agredir": {"all":"agrid" },
+			  "progredir": {"all":"progrid" },
+			  "transgredir": {"all":"transgrid" },
+			  "dormir": {"all":"durm" },
+			  "cobrir": {"all":"cubr" },
+			  "engolir": {"all":"engul" },
+			  "seguir": {"all":"sig" },
+			  "conseguir": {"all":"consig" },
+			  "prosseguir": {"all":"prossig" },
+			  "servir": {"all":"sirv" },
+			  "mentir": {"all":"mint" },
+			  "vestir": {"all":"vist" },
+			  "repetir": {"all":"repit" },
+			  "sugerir": {"all":"sugir" },
+			  "sentir": {"all":"sint" },
+			  "passear": {"all":"passei" },
+			  "odiar": {"all":"odei" },
+			  "incendiar": {"all":"incendei" },
+			  "ansiar": {"all":"ansei" },
+			  "remediar": {"all":"remedei" },
+			  "caber": {"all":"caib" },
+			  "ler": {"all":"lei" },
+			  "reler": {"all":"relei" },
+			  "perder": {"all":"perc" },
+			  "ouvir": {"all":"ouç" },
+			  "pedir": {"all":"peç" },
+			  "rir": {"all":"ri" },
+			  "sorrir": {"all":"sorri" },
+		})
+
+	def grupo(self):
+		if (self._verbo in ("estar","por")):
+			return "2"
+		else:
+			return super().grupo()
+
+	@property
+	def verbo_irreg(self):
+		return( {
+			"dar": {"eu":"dê","tu":"dês","ele":"dê","eles":"deem"},
+			"ir": {"eu":"vá","tu":"vás","ele":"vá","nos":"vamos","eles":"vão"},
+			"subir": {"eu":"suba","tu":"subas","ele":"suba","nos":"subamos","eles":"subam"},
+			"fugir": {"eu":"fuja","tu":"fujas","ele":"fuja","nos":"fujamos","eles":"fujam"},
+			"acudir": {"eu":"acuda","tu":"acudas","ele":"acuda","nos":"acudamos","eles":"acudam"},
+			"sacudir": {"eu":"sacuda","tu":"sacudas","ele":"sacuda","nos":"sacudamos","eles":"sacudam"},
+			"passear": {"nos":"passeemos"},
+			"odiar": {"nos":"odiemos"},
+			"incendiar": {"nos":"incendiemos"},
+			"ansiar": {"nos":"ansiemos"},
+			"remediar": {"nos":"remediemos"}
+		})
+
+class Imperativo(Tempo):
+	@property
+	def nome(self):
+		return "Imperativo"
+
+	@property
+	def suffixo(self):
+		return "!"
+
+	@property
+	def pessoas(self):
+		return {"tuAf":"(tu)","tu":"(tu) não","ele":"(você)","nos":"(nós)","eles":"(vocês)"}
+
+	def conjug(self,pessoa):
+		self.irreg=False
+		if (self._verbo in self.verbo_irreg and pessoa in self.verbo_irreg[self._verbo]):
+			self.irreg=True
+			return self.verbo_irreg[self._verbo][pessoa]
+		elif(pessoa!="tuAf"):
+			subj=Presente_Subjuntivo()
+			subj.verbo=self.verbo
+			result=subj.conjug(pessoa)
+			self.irreg=subj.irreg
+			return result
+		else:
+			pres=Presente_Indicativo()
+			pres.verbo=self.verbo
+			result= pres.conjug("ele")		
+			self.irreg=pres.irreg
+			return result
+
+	@property
+	def verbo_irreg(self):
+		return( {
+			"ser": {"tuAf":"sê"}
+		} )
+
+
+## Main
+
+def main():
+	#verbos=["cantar","falar","comer","dormir","partir","ir"]
+	#verbos=["saber","poder","querer","ver","ler","vir","ir"]
+	#verbos=["ver","ler","fazer","dizer","trazer","saber","poder","perder","querer","por"]
+	#verbos=["abrir","pedir","ouvir","dormir","subir","fugir","rir","ir","vir"]
+	tempos=[Presente_Subjuntivo()]
+	# FULL
+	verbos=["falar","comer","partir","dar","dizer","estar","fazer","haver","ir","poder","por","querer","saber","ser","sair","ter","trazer","ver","vir","dormir","ouvir","pedir","despedir","medir","preferir","conseguir","divertir","seguir","sentir","servir","vestir","ler","reler","rir","sorrir","perder","subir","consumir","fugir","construir","destruir","traduzir","reduzir","reluzir"]
+	#tempos=[Imperativo()]
+	# larousse
+	#verbos=["ter","ser","andar","viver","partir","prevenir","agredir","progredir","transgredir","dormir","cobrir","engolir","tossir","seguir","conseguir","prosseguir","servir","sentir","mentir","vestir","repetir","sugerir","subir","fugir","acudir","sacudir","passear","odiar","incendiar","ansiar","remediar","sair","cair","distrair","contrair","diluir","concluir","influir","distribuir","retribuir","dar","estar","caber","dizer","fazer","haver","ganhar","haver","ler","perder","poder","por","querer","saber","trazer","ver","abrir","cobrir","ir","ouvir","pedir","rir","vir","gastar","pagar","escrever"]
+	for verbo in verbos:	
+		print ("_" * 30)
+		for tempo in tempos:
+			tempo.verbo=verbo
+			print ("")
+			print (tempo.info())
+			tempo.conjugTudo()
+
+if __name__ == "__main__":
+	main()
+
+
