@@ -11,18 +11,18 @@ It is not meant as a strong reference, but as a learning tool.
 I tested it against my textbooks and dictionary, but feel free to contribute and enrich it if you are seeing some errors.
 # Current status
 ## Implemented
-Tempos
+### Tempos
 - Presente do indicativo
 - Preterito perfeito
 - Imperfeito
 - Presente do condicional
 - Presente do subjuntivo
 - Imperativo
-Options
+### Options
 - "ter de" + infinitivo
 - "ir" + infinitivo
-# Unimplemented - TO DO
-Tempos
+## Unimplemented - TO DO
+### Tempos
 - Perfeito composto
 - Mais que perfeito
 - Futuro simples
