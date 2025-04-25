@@ -161,9 +161,10 @@ class Presente_Indicativo(Tempo):
 	def verbo_irreg(self):
 		return( {
 				"saber": {"eu":"sei"},	
+				"valer": {"eu":"valho"},	
 				"querer": {"ele":"quer"},
 				"ver": {"eu":"vejo","tu":"vês","ele":"vê","eles":"veem"},
-				"ler": {"eu":"leio","tu":"lês","ele":"lê","eles":"leem"},
+				"ler": {"eu":"leio","tu":"lês","ele":"lê","eles":"lêem"},
 				"reler": {"eu":"releio","tu":"relês","ele":"relê","eles":"releem"},
 				"vir": {"eu":"venho","tu":"vens","ele":"vem","nos":"vimos","eles":"vêm"},
 				"ir" : {"eu":"vou","tu":"vais","ele":"vai","nos":"vamos","eles":"vão"} ,
@@ -197,6 +198,7 @@ class Presente_Indicativo(Tempo):
 				"influir": {"tu":"influis","ele":"influi"},
 				"distribuir": {"tu":"distribuis","ele":"distribui"},
 				"retribuir": {"tu":"retribuis","ele":"retribui"},
+				"crer": {"eu":"creio","tu":"crês","ele":"crê","eles":"crêem"},
 
 			} )
 
@@ -335,6 +337,7 @@ class Presente_Subjuntivo(Tempo):
 		return( 
 			{ "dizer": {"all":"dig" },
 			  "estar": {"all":"estej" },
+			  "valer": {"all":"valh" },
 			  "fazer": {"all":"faç" },
 			  "haver": {"all":"haj" },
 			  "poder": {"all":"poss" },
@@ -381,6 +384,7 @@ class Presente_Subjuntivo(Tempo):
 			  "rir": {"all":"ri" },
 			  "sorrir": {"all":"sorri" },
 			  "pagar": {"all":"pagu"},
+			  "crer": {"all":"crei"},
 		})
 
 	def grupo(self):
@@ -392,7 +396,7 @@ class Presente_Subjuntivo(Tempo):
 	@property
 	def verbo_irreg(self):
 		return( {
-			"dar": {"eu":"dê","tu":"dês","ele":"dê","eles":"deem"},
+			"dar": {"eu":"dê","tu":"dês","ele":"dê","eles":"dêem"},
 			"ir": {"eu":"vá","tu":"vás","ele":"vá","nos":"vamos","eles":"vão"},
 			"subir": {"eu":"suba","tu":"subas","ele":"suba","nos":"subamos","eles":"subam"},
 			"fugir": {"eu":"fuja","tu":"fujas","ele":"fuja","nos":"fujamos","eles":"fujam"},
@@ -445,12 +449,14 @@ class Imperativo(Tempo):
 ## Main
 
 def main():
-	tempos=[Presente_Indicativo(),Imperfeito(),Preterito_Perfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
+	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Preterito_Perfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
 	#tempos=[Presente_Subjuntivo()]
 	# verbos do caderno 
-	verbos=["falar","comer","partir","dar","dizer","estar","fazer","haver","ir","poder","por","querer","saber","ser","sair","ter","trazer","ver","vir","dormir","ouvir","pedir","despedir","medir","preferir","conseguir","divertir","seguir","sentir","servir","vestir","ler","reler","rir","sorrir","perder","subir","consumir","fugir","construir","destruir","traduzir","reduzir","reluzir"]
+	#verbos=["falar","comer","partir","dar","dizer","estar","fazer","haver","ir","poder","por","querer","saber","ser","sair","ter","trazer","ver","vir","dormir","ouvir","pedir","despedir","medir","preferir","conseguir","divertir","seguir","sentir","servir","vestir","ler","reler","rir","sorrir","perder","subir","consumir","fugir","construir","destruir","traduzir","reduzir","reluzir"]
 	# verbos do larousse
 	#verbos=["ter","ser","andar","viver","partir","prevenir","agredir","progredir","transgredir","dormir","cobrir","engolir","tossir","seguir","conseguir","prosseguir","servir","sentir","mentir","vestir","repetir","sugerir","subir","fugir","acudir","sacudir","passear","odiar","incendiar","ansiar","remediar","sair","cair","distrair","contrair","diluir","concluir","influir","distribuir","retribuir","dar","estar","caber","dizer","fazer","haver","ganhar","haver","ler","perder","poder","por","querer","saber","trazer","ver","abrir","cobrir","ir","ouvir","pedir","rir","vir","gastar","pagar","escrever"]
+	# verbos desvigne
+	verbos=["dar","caber","crer","dizer","fazer","ler","perder","poder","por","querer","saber","trazer","valer","ver","ir","ouvir","pedir","rir","vir"]
 	for verbo in verbos:	
 		print ("_" * 30)
 		for tempo in tempos:
