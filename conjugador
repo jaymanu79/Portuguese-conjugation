@@ -161,7 +161,7 @@ class Presente_Indicativo(Tempo):
 	def verbo_irreg(self):
 		return( {
 				"saber": {"eu":"sei"},	
-				"valer": {"eu":"valho"},	
+				"valer": {"eu":"valho"},
 				"querer": {"ele":"quer"},
 				"ver": {"eu":"vejo","tu":"vês","ele":"vê","eles":"veem"},
 				"ler": {"eu":"leio","tu":"lês","ele":"lê","eles":"lêem"},
@@ -449,17 +449,25 @@ class Imperativo(Tempo):
 ## Main
 
 def main():
-	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Preterito_Perfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
+#	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Preterito_Perfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
 	#tempos=[Presente_Subjuntivo()]
 	# verbos do caderno 
 	#verbos=["falar","comer","partir","dar","dizer","estar","fazer","haver","ir","poder","por","querer","saber","ser","sair","ter","trazer","ver","vir","dormir","ouvir","pedir","despedir","medir","preferir","conseguir","divertir","seguir","sentir","servir","vestir","ler","reler","rir","sorrir","perder","subir","consumir","fugir","construir","destruir","traduzir","reduzir","reluzir"]
 	# verbos do larousse
 	#verbos=["ter","ser","andar","viver","partir","prevenir","agredir","progredir","transgredir","dormir","cobrir","engolir","tossir","seguir","conseguir","prosseguir","servir","sentir","mentir","vestir","repetir","sugerir","subir","fugir","acudir","sacudir","passear","odiar","incendiar","ansiar","remediar","sair","cair","distrair","contrair","diluir","concluir","influir","distribuir","retribuir","dar","estar","caber","dizer","fazer","haver","ganhar","haver","ler","perder","poder","por","querer","saber","trazer","ver","abrir","cobrir","ir","ouvir","pedir","rir","vir","gastar","pagar","escrever"]
 	# verbos desvigne
-	verbos=["dar","caber","crer","dizer","fazer","ler","perder","poder","por","querer","saber","trazer","valer","ver","ir","ouvir","pedir","rir","vir"]
-	for verbo in verbos:	
+#	verbos=["dar","caber","crer","dizer","fazer","ler","perder","poder","por","querer","saber","trazer","valer","ver","ir","ouvir","pedir","rir","vir"]
+#	verbos=["ser","ter","ler","ir","vir","ver"];
+	verbos=["saber","haver","querer","poder"];
+	verbos=["escrever","plantar","fazer","aprender","ver","subir","provar","fazer","preparar","ler","ir","ter","fazer","ganhar","tomar"];
+	verbos=["nascer","começar","ir","fazer","passear","ver","deitar","mudar","conhecer","decidir","entrar","estudar","terminar","namorar","casar","morar"];
+	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
+	tempos=[Preterito_Perfeito()]
+#	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
+	
+	for tempo in tempos:	
 		print ("_" * 30)
-		for tempo in tempos:
+		for verbo in verbos:
 			tempo.verbo=verbo
 			print ("")
 			print (tempo.info())
