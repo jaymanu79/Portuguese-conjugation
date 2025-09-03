@@ -458,20 +458,24 @@ def main():
 	# verbos desvigne
 #	verbos=["dar","caber","crer","dizer","fazer","ler","perder","poder","por","querer","saber","trazer","valer","ver","ir","ouvir","pedir","rir","vir"]
 #	verbos=["ser","ter","ler","ir","vir","ver"];
-	verbos=["saber","haver","querer","poder"];
-	verbos=["escrever","plantar","fazer","aprender","ver","subir","provar","fazer","preparar","ler","ir","ter","fazer","ganhar","tomar"];
-	verbos=["nascer","começar","ir","fazer","passear","ver","deitar","mudar","conhecer","decidir","entrar","estudar","terminar","namorar","casar","morar"];
-	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
-	tempos=[Preterito_Perfeito()]
+#	verbos=["saber","haver","querer","poder"];
+#	verbos=["escrever","plantar","fazer","aprender","ver","subir","provar","fazer","preparar","ler","ir","ter","fazer","ganhar","tomar"];
+#	verbos=["nascer","começar","ir","fazer","passear","ver","deitar","mudar","conhecer","decidir","entrar","estudar","terminar","namorar","casar","morar"];
 #	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
-	
-	for tempo in tempos:	
-		print ("_" * 30)
-		for verbo in verbos:
+#	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito()]
+	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperativo(),Presente_Subjuntivo(),Condicional()]
+#	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
+
+	verbo=input("Verbo (enter to quit) ? ")
+	while(verbo != "q" and verbo != ""):
+		for tempo in tempos:	
+			print ("_" * 30)
 			tempo.verbo=verbo
 			print ("")
 			print (tempo.info())
 			tempo.conjugTudo()
+		print ("_" * 30)
+		verbo=input("Verbo (enter to quit) ? ")
 
 if __name__ == "__main__":
 	main()
