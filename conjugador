@@ -175,6 +175,7 @@ class Presente_Indicativo(Tempo):
 				"fazer": {"eu":"faço","ele":"faz"},
 				"haver": {"eu":"hei","tu":"hás","ele":"há","eles":"hão"},
 				"por": {"eu":"ponho","tu":"pões","ele":"põe","nos":"pomos","eles":"põem"},
+				"opor": {"eu":"oponho","tu":"opões","ele":"opõe","nos":"opomos","eles":"opõem"},
 				"ser": {"eu":"sou","tu":"és","ele":"é","nos":"somos","eles":"são"},
 				"sair": {"eu":"saio","tu":"sais","ele":"sai"},
 				"cair": {"eu":"caio","tu":"cais","ele":"cai"},
@@ -235,6 +236,7 @@ class Preterito_Perfeito(Tempo):
                         "ser": {"eu":"fui","tu":"foste","ele":"foi","nos":"fomos","eles":"foram"},
                         "ir": {"eu":"fui","tu":"foste","ele":"foi","nos":"fomos","eles":"foram"},
                         "por": {"eu":"pus","tu":"puseste","ele":"pôs","nos":"pusemos","eles":"puseram"},
+                        "opor": {"eu":"opus","tu":"opuseste","ele":"opôs","nos":"opusemos","eles":"opuseram"},
                         "estar": {"eu":"estive","tu":"estiveste","ele":"esteve","nos":"estivemos","eles":"estiveram"},
                         "dar": {"tu":"deste","ele":"deu","nos":"demos","eles":"deram"},
                         "caber": {"eu":"coube","ele":"coube"},
@@ -279,6 +281,7 @@ class Imperfeito(Tempo):
 			"ter": {"all":"tinh"},
 			"ser": {"all":"er"},
 			"por": {"all":"punh"},
+			"opor": {"all":"opunh"},
 			"vir": {"all":"vinh"},
 		} )
 
@@ -342,6 +345,7 @@ class Presente_Subjuntivo(Tempo):
 			  "haver": {"all":"haj" },
 			  "poder": {"all":"poss" },
 			  "por": {"all":"ponh" },
+			  "opor": {"all":"oponh" },
 			  "querer": {"all":"queir" },
 			  "saber": {"all":"saib" },
 			  "ser": {"all":"sej" },
@@ -381,6 +385,10 @@ class Presente_Subjuntivo(Tempo):
 			  "perder": {"all":"perc" },
 			  "ouvir": {"all":"ouç" },
 			  "pedir": {"all":"peç" },
+			  "despedir": {"all":"despeç" },
+			  "medir": {"all":"meç" },
+			  "preferir": {"all":"prefir" },
+			  "divertir": {"all":"divirt" },
 			  "rir": {"all":"ri" },
 			  "sorrir": {"all":"sorri" },
 			  "pagar": {"all":"pagu"},
@@ -388,7 +396,7 @@ class Presente_Subjuntivo(Tempo):
 		})
 
 	def grupo(self):
-		if (self._verbo in ("estar","por")):
+		if (self._verbo in ("estar","por","opor")):
 			return "2"
 		else:
 			return super().grupo()
@@ -463,7 +471,7 @@ def main():
 #	verbos=["nascer","começar","ir","fazer","passear","ver","deitar","mudar","conhecer","decidir","entrar","estudar","terminar","namorar","casar","morar"];
 #	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
 #	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito()]
-	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperativo(),Presente_Subjuntivo(),Condicional()]
+	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperativo(),Presente_Subjuntivo()]
 #	tempos=[Presente_Indicativo(),Preterito_Perfeito(),Imperfeito(),Condicional(),Imperativo(),Presente_Subjuntivo()]
 
 	verbo=input("Verbo (enter to quit) ? ")
