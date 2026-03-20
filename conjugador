@@ -550,6 +550,14 @@ class FuturoComposto(PreteritoMais,Tempo):
 
 	tempoComposto=Futuro()
 
+class PreteritoPerfeitoComposto(PreteritoMais,Tempo):
+
+	@property
+	def nome(self):
+		return "Pretérito perfeito composto"
+
+	tempoComposto=Presente_Indicativo()
+
 ## Tools
 
 # A dictionary which accepts "all" key as wildcard
